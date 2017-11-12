@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Commments</title>
+</head>
+
+<style> 
+body {
+    margin-top: 400px;
+}
+</style>
+<body>
+    <h1>Comments</h1>
+    {% for comment in comments %}
+        <p><b>{{ comment.author }}:</b> {{ comment.text }}</p>
+    {% endfor %}
+
+    <form method = "POST" action = "{% url 'comment' %}">
+        {% csrf_token %}
+        Author: <input type="text" name="author"> </br>
+        Text: <input type="text" name="text"> </br>
+        <input type="submit" name="submit" value="Submit">
+    </form>
+</body>
+</html>
