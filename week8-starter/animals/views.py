@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 
 from .models import Comment
 
+from django.http import JsonResponse
+
 # Create your views here.
 def get_info(request):
     if request.method == 'GET':
@@ -25,5 +27,10 @@ def comment(request):
         text = request.POST['text']
         comment = Comment(author=author, text=text)
         comment.save()
-    context = {"comments": Comment.objects.all()}
-    return render(request, 'animals/comments.html', context)
+        success = {
+            "success": True
+        }
+        return JsonResponse(success)
+    else:
+        context = {"comments": Comment.objects.all()}
+        return render(request, 'animals/comments.html', context)

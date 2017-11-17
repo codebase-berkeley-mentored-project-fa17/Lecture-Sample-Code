@@ -16,13 +16,10 @@ body {
         <p><b>{{ comment.author }}:</b> {{ comment.text }}</p>
     {% endfor %}
     </div>
-
-    <form method = "POST" action = "{% url 'comment' %}">
-        {% csrf_token %}
-        Author: <input id = "author" type="text" name="author"> </br>
-        Text: <input id ="text" type="text" name="text"> </br>
-        <button id = "submit">Submit</button>
-    </form>
+    
+    Author: <input id = "author" type="text" name="author"> </br>
+    Text: <input id ="text" type="text" name="text"> </br>
+    <button id = "submit">Submit</button>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
@@ -33,10 +30,8 @@ $("#submit").on("click", function(event) {
         text: $("#text").val(),
         csrfmiddlewaretoken: "{{ csrf_token }}"
     };
-    console.log("clicked");
     $.post("/animals/comment", data, function(res) {
         event.preventDefault();
-        console.log("wtf");
         if (res.success) {
             $("#comments").append("<p><b>" + $("#author").val() + ":</b> " + $("#text").val() + "</p>");
         }

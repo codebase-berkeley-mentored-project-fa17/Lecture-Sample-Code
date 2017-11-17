@@ -17,9 +17,25 @@ body {
 
     <form method = "POST" action = "{% url 'comment' %}">
         {% csrf_token %}
-        Author: <input type="text" name="author"> </br>
-        Text: <input type="text" name="text"> </br>
-        <input type="submit" name="submit" value="Submit">
+        Author: <input id="author" type="text" name="author"> </br>
+        Text: <input id ="text" type="text" name="text"> </br>
+        <input id="submit" type="submit" name="submit" value="Submit">
     </form>
 </body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+$("#submit").on("click", function(event) {
+    event.preventDefault();
+    var data = {
+        "author": $("#author").val(),
+        "text": $("#text").val()
+    }
+
+    $.post("/portal/comment", data, function(res) {
+        console.log("In callback");
+    })
+    
+});
+</script>
 </html>
